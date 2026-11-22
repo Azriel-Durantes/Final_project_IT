@@ -5,14 +5,13 @@
 
 using namespace std;
 
-// Represents one student registered for the school event.
 class Student {
 private:
     string name;
     string password;
     string programName;
-    int year;     // 1 or 2
-    int ticket;   // 1 = basic (free, includes a drink), 2 = meal ($10, includes a meal and a coke)
+    int year;
+    int ticket;
     int chair;
 
 public:
