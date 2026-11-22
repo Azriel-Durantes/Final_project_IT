@@ -22,10 +22,9 @@ int main() {
             string name;
             string grade;
             cout << "Enter student name: ";
-            getline(cin, name);
-while (password == "") {
-    cout << "Password cannot be blank. Create a password: ";
-    getline(cin, password);
+            while (name == "") {
+    cout << "Name cannot be blank. Enter student name: ";
+    getline(cin, name);
 }
             cout << "Enter grade/form: ";
             getline(cin, grade);
