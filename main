@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -10,7 +11,6 @@ using namespace std;
 const int TOTAL_CHAIRS = 20;
 const int TOTAL_PROGRAMS = 7;
 
-// Asks for a whole number between low and high until the entry is valid.
 int readNumber(string prompt, int low, int high) {
     int number;
     cout << prompt;
@@ -23,7 +23,6 @@ int readNumber(string prompt, int low, int high) {
     return number;
 }
 
-// Asks for text until the entry is not blank.
 string readText(string prompt, string label) {
     string text;
     cout << prompt;
@@ -35,7 +34,6 @@ string readText(string prompt, string label) {
     return text;
 }
 
-// Returns a lowercase copy of the text so names can be compared without caring about capitals.
 string toLower(string text) {
     for (int i = 0; i < text.size(); i++) {
         text[i] = tolower(text[i]);
@@ -43,7 +41,6 @@ string toLower(string text) {
     return text;
 }
 
-// Returns the position of the student with this name, or -1 if there is none.
 int findStudent(const vector<Student>& students, string name) {
     for (int i = 0; i < students.size(); i++) {
         if (toLower(students[i].getName()) == toLower(name)) {
@@ -53,7 +50,6 @@ int findStudent(const vector<Student>& students, string name) {
     return -1;
 }
 
-// Prints the chairs in rows of five. XX means the chair is taken.
 void showChairs(const array<bool, TOTAL_CHAIRS>& chairs) {
     for (int i = 0; i < chairs.size(); i++) {
         if (chairs[i]) {
@@ -69,7 +65,6 @@ void showChairs(const array<bool, TOTAL_CHAIRS>& chairs) {
     }
 }
 
-// Signs up a new student: name, password, class, year, ticket and chair.
 void registerStudent(vector<Student>& students, array<bool, TOTAL_CHAIRS>& chairs, const array<string, TOTAL_PROGRAMS>& programs) {
     if (students.size() >= chairs.size()) {
         cout << "All chairs are taken. Registration is full." << endl;
@@ -81,35 +76,40 @@ void registerStudent(vector<Student>& students, array<bool, TOTAL_CHAIRS>& chair
         cout << "That name is already registered." << endl;
         name = readText("Enter a different name: ", "Name");
     }
+
     string password = readText("Create a password: ", "Password");
 
     cout << "\nSelect student's class:" << endl;
     for (int i = 0; i < programs.size(); i++) {
         cout << i + 1 << ". " << programs[i] << endl;
     }
+
     int classChoice = readNumber("Enter class number: ", 1, TOTAL_PROGRAMS);
     int year = readNumber("Enter year (1 or 2): ", 1, 2);
 
     cout << "\nSelect ticket type:" << endl;
     cout << "1. Basic - Free (includes a drink)" << endl;
     cout << "2. Meal - $10 (includes a meal and a coke)" << endl;
+
     int ticket = readNumber("Enter ticket number: ", 1, 2);
 
     cout << "\nSelect your chair:" << endl;
     showChairs(chairs);
+
     int chair = readNumber("Enter chair number: ", 1, TOTAL_CHAIRS);
     while (chairs[chair - 1]) {
         cout << "That chair is taken." << endl;
         chair = readNumber("Enter a free chair number: ", 1, TOTAL_CHAIRS);
     }
+
     chairs[chair - 1] = true;
 
     Student s(name, password, programs[classChoice - 1], year, ticket, chair);
     students.push_back(s);
+
     cout << "Student registered. Your chair is number " << chair << "." << endl;
 }
 
-// Lets a student log in with their name and password and see their details.
 void loginStudent(const vector<Student>& students) {
     if (students.size() == 0) {
         cout << "No students registered yet." << endl;
@@ -120,6 +120,7 @@ void loginStudent(const vector<Student>& students) {
     string password = readText("Enter password: ", "Password");
 
     int index = findStudent(students, name);
+
     if (index == -1 || !students[index].checkPassword(password)) {
         cout << "Invalid name or password." << endl;
         return;
@@ -128,20 +129,22 @@ void loginStudent(const vector<Student>& students) {
     cout << "\nWelcome, " << students[index].getName() << "!" << endl;
     cout << "Class: " << students[index].getProgramName() << ", Year " << students[index].getYear() << endl;
     cout << "Ticket: " << students[index].getTicketName() << endl;
+
     if (students[index].getTicket() == 2) {
         cout << "Meal: Yes - $" << students[index].getPrice() << " meal and coke" << endl;
     } else {
         cout << "Meal: No" << endl;
     }
+
     cout << "Your chair: " << students[index].getChair() << endl;
 }
 
-// Lists every registered student.
 void showStudents(const vector<Student>& students) {
     if (students.size() == 0) {
         cout << "No students registered yet." << endl;
         return;
     }
+
     for (int i = 0; i < students.size(); i++) {
         cout << i + 1 << ". " << students[i].getName() << " - " << students[i].getProgramName()
              << ", Year " << students[i].getYear() << " - " << students[i].getTicketName()
@@ -149,16 +152,17 @@ void showStudents(const vector<Student>& students) {
     }
 }
 
-// Shows totals for the event: registrations, chairs left, meals sold and money collected.
 void showSummary(const vector<Student>& students, int totalChairs) {
     int meals = 0;
     int money = 0;
+
     for (int i = 0; i < students.size(); i++) {
         if (students[i].getTicket() == 2) {
             meals++;
         }
         money = money + students[i].getPrice();
     }
+
     int total = students.size();
 
     cout << "\n--- Event Summary ---" << endl;
@@ -192,6 +196,7 @@ int main() {
         cout << "4. View registered students" << endl;
         cout << "5. Event summary" << endl;
         cout << "6. Exit" << endl;
+
         choice = readNumber("Enter choice: ", 1, 6);
 
         if (choice == 1) {
