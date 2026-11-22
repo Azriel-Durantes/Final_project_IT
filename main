@@ -59,8 +59,6 @@ int main() {
             cout << "Enter student name: ";
             getline(cin, name);
             while (name == "") {
-                cout << "Name cannot be blank. Enter student name: ";
-                getline(cin, name);
 bool validName = false;
 while (!validName) {
     validName = true;
