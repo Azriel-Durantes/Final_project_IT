@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <array>
+#include "Student.h"
 
 using namespace std;
 
@@ -16,11 +17,7 @@ int main() {
         "Agriculture Business"
     };
 
-    vector<string> names;
-    vector<string> classes;
-    vector<int> years;
-    vector<int> tickets;
-    vector<int> seats;
+    vector<Student> students;
     array<bool, 20> chairs = {};
     int choice = 0;
 
@@ -66,8 +63,8 @@ int main() {
                     getline(cin, name);
                     validName = false;
                 } else {
-                    for (int i = 0; i < names.size(); i++) {
-                        if (names[i] == name) {
+                    for (int i = 0; i < students.size(); i++) {
+                        if (students[i].getName() == name) {
                             cout << "That name is already registered. Enter a different name: ";
                             getline(cin, name);
                             validName = false;
@@ -130,22 +127,19 @@ int main() {
             cin.ignore(1000, '\n');
             chairs[chair - 1] = true;
 
-            names.push_back(name);
-            classes.push_back(programs[classChoice - 1]);
-            years.push_back(year);
-            tickets.push_back(ticket);
-            seats.push_back(chair);
+            Student s(name, programs[classChoice - 1], year, ticket, chair);
+            students.push_back(s);
             cout << "Student registered." << endl;
         } else if (choice == 2) {
-            if (names.size() == 0) {
+            if (students.size() == 0) {
                 cout << "No students registered yet." << endl;
             } else {
-                for (int i = 0; i < names.size(); i++) {
+                for (int i = 0; i < students.size(); i++) {
                     string ticketName = "Basic (free)";
-                    if (tickets[i] == 2) {
+                    if (students[i].getTicket() == 2) {
                         ticketName = "Meal ($10)";
                     }
-                    cout << i + 1 << ". " << names[i] << " - " << classes[i] << ", Year " << years[i] << " - " << ticketName << ", Chair " << seats[i] << endl;
+                    cout << i + 1 << ". " << students[i].getName() << " - " << students[i].getProgramName() << ", Year " << students[i].getYear() << " - " << ticketName << ", Chair " << students[i].getChair() << endl;
                 }
             }
         } else if (choice == 3) {
