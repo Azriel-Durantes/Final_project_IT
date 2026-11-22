@@ -2,6 +2,9 @@
 #include <string>
 #include <vector>
 #include <array>
+#include <fstream>
+
+using namespace std;
 
 using namespace std;
 
@@ -58,7 +61,6 @@ int main() {
 
             cout << "Enter student name: ";
             getline(cin, name);
-            while (name == "") {
 bool validName = false;
 while (!validName) {
     validName = true;
@@ -165,8 +167,13 @@ while (!validName) {
                 }
             }
         } else if (choice == 4) {
-            cout << "Goodbye." << endl;
-        } else {
+    ofstream file("students.txt");
+    for (int i = 0; i < names.size(); i++) {
+        file << names[i] << "|" << classes[i] << "|" << years[i] << "|" << tickets[i] << "|" << seats[i] << endl;
+    }
+    file.close();
+    cout << "Goodbye." << endl;
+} else {
             cout << "Invalid choice." << endl;
         }
     }
