@@ -2,9 +2,6 @@
 #include <string>
 #include <vector>
 #include <array>
-#include <fstream>
-
-using namespace std;
 
 using namespace std;
 
@@ -61,25 +58,24 @@ int main() {
 
             cout << "Enter student name: ";
             getline(cin, name);
-bool validName = false;
-while (!validName) {
-    validName = true;
-    if (name == "") {
-        cout << "Name cannot be blank. Enter student name: ";
-        getline(cin, name);
-        validName = false;
-    } else {
-        for (int i = 0; i < names.size(); i++) {
-            if (names[i] == name) {
-                cout << "That name is already registered. Enter a different name: ";
-                getline(cin, name);
-                validName = false;
-                break;
+            bool validName = false;
+            while (!validName) {
+                validName = true;
+                if (name == "") {
+                    cout << "Name cannot be blank. Enter student name: ";
+                    getline(cin, name);
+                    validName = false;
+                } else {
+                    for (int i = 0; i < names.size(); i++) {
+                        if (names[i] == name) {
+                            cout << "That name is already registered. Enter a different name: ";
+                            getline(cin, name);
+                            validName = false;
+                            break;
+                        }
+                    }
+                }
             }
-        }
-    }
-}
-            
 
             cout << "\nSelect student's class:" << endl;
             for (int i = 0; i < programs.size(); i++) {
@@ -167,13 +163,8 @@ while (!validName) {
                 }
             }
         } else if (choice == 4) {
-    ofstream file("students.txt");
-    for (int i = 0; i < names.size(); i++) {
-        file << names[i] << "|" << classes[i] << "|" << years[i] << "|" << tickets[i] << "|" << seats[i] << endl;
-    }
-    file.close();
-    cout << "Goodbye." << endl;
-} else {
+            cout << "Goodbye." << endl;
+        } else {
             cout << "Invalid choice." << endl;
         }
     }
