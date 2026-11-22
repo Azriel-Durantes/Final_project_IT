@@ -20,6 +20,7 @@ int main() {
     vector<string> classes;
     vector<int> years;
     vector<int> tickets;
+    vector<int> seats;
     array<bool, 20> chairs = {};
     int choice = 0;
 
@@ -38,10 +39,22 @@ int main() {
         cin.ignore(1000, '\n');
 
         if (choice == 1) {
+            int taken = 0;
+            for (int i = 0; i < chairs.size(); i++) {
+                if (chairs[i]) {
+                    taken++;
+                }
+            }
+            if (taken == chairs.size()) {
+                cout << "All chairs are taken." << endl;
+                continue;
+            }
+
             string name;
             int classChoice;
             int year;
             int ticket;
+            int chair;
 
             cout << "Enter student name: ";
             getline(cin, name);
@@ -81,10 +94,33 @@ int main() {
             }
             cin.ignore(1000, '\n');
 
+            cout << "\nSelect your chair:" << endl;
+            for (int i = 0; i < chairs.size(); i++) {
+                if (chairs[i]) {
+                    cout << "[XX] ";
+                } else if (i + 1 < 10) {
+                    cout << "[ " << i + 1 << "] ";
+                } else {
+                    cout << "[" << i + 1 << "] ";
+                }
+                if ((i + 1) % 5 == 0) {
+                    cout << endl;
+                }
+            }
+            cout << "Enter chair number: ";
+            while (!(cin >> chair) || chair < 1 || chair > 20 || chairs[chair - 1]) {
+                cin.clear();
+                cin.ignore(1000, '\n');
+                cout << "Invalid or taken. Enter a free chair number: ";
+            }
+            cin.ignore(1000, '\n');
+            chairs[chair - 1] = true;
+
             names.push_back(name);
             classes.push_back(programs[classChoice - 1]);
             years.push_back(year);
             tickets.push_back(ticket);
+            seats.push_back(chair);
             cout << "Student registered." << endl;
         } else if (choice == 2) {
             if (names.size() == 0) {
@@ -95,7 +131,7 @@ int main() {
                     if (tickets[i] == 2) {
                         ticketName = "Meal ($10)";
                     }
-                    cout << i + 1 << ". " << names[i] << " - " << classes[i] << ", Year " << years[i] << " - " << ticketName << endl;
+                    cout << i + 1 << ". " << names[i] << " - " << classes[i] << ", Year " << years[i] << " - " << ticketName << ", Chair " << seats[i] << endl;
                 }
             }
         } else if (choice == 3) {
