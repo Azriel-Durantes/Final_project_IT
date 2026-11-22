@@ -1,20 +1,24 @@
 #include "Student.h"
 
-// The constructor only accepts valid year and ticket values.
+using namespace std;
+
 Student::Student(string n, string pw, string p, int y, int t, int c) {
     name = n;
     password = pw;
     programName = p;
+
     if (y == 2) {
         year = 2;
     } else {
         year = 1;
     }
+
     if (t == 2) {
         ticket = 2;
     } else {
         ticket = 1;
     }
+
     chair = c;
 }
 
